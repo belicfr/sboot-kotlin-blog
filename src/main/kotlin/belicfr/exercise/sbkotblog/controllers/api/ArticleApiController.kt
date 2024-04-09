@@ -13,13 +13,12 @@ import org.springframework.web.server.ResponseStatusException
 class ArticleApiController(
     private val repository: ArticleRepository) {
 
-    @GetMapping("/")
+    @GetMapping("", "/")
     fun findAll() = repository.findAllByOrderByAddedAtDesc()
 
     @GetMapping("/{slug}")
     fun findOne(@PathVariable slug: String)
         = repository.findBySlug(slug)
-        ?: throw ResponseStatusException(
-            HttpStatus.NOT_FOUND,
-            "This article does not exist")
+            ?: throw ResponseStatusException(HttpStatus.NOT_FOUND,
+                                             "This article does not exist")
 }

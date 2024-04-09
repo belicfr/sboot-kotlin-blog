@@ -13,13 +13,12 @@ import org.springframework.web.server.ResponseStatusException
 class UserApiController(
     private val repository: UserRepository) {
 
-    @GetMapping("/")
+    @GetMapping("", "/")
     fun findAll() = repository.findAll()
 
     @GetMapping("/{login}")
     fun findOne(@PathVariable login: String)
         = repository.findByLogin(login)
-        ?: throw ResponseStatusException(
-            HttpStatus.NOT_FOUND,
-            "This user does not exist")
+            ?: throw ResponseStatusException(
+                HttpStatus.NOT_FOUND, "This user does not exist")
 }

@@ -7,6 +7,7 @@ plugins {
 	kotlin("plugin.spring") version "1.9.23"
 	kotlin("plugin.jpa") version "1.9.23"
 	kotlin("plugin.allopen") version "1.9.22"
+	kotlin("kapt") version "1.9.22"
 }
 
 group = "belicfr.exercise"
@@ -35,6 +36,7 @@ dependencies {
 	testImplementation("org.junit.jupiter:junit-jupiter-api")
 	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 	testImplementation("com.ninja-squad:springmockk:4.0.2")
+	kapt("org.springframework.boot:spring-boot-configuration-processor")
 }
 
 allOpen {

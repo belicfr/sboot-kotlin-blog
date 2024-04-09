@@ -43,14 +43,31 @@ class ControllersTests(@Autowired val mockMvc: MockMvc) {
         } returns listOf(lorem5Article, ipsumArticle)
 
         mockMvc.perform(
-            get("/api/article").accept(MediaType.APPLICATION_JSON))
+            get("/api/article/").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk)
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("\$.[0].author.login").value(johnDoe.login))
             .andExpect(jsonPath("\$.[0].slug").value(lorem5Article.slug))
             .andExpect(jsonPath("\$.[1].author.login").value(johnDoe.login))
             .andExpect(jsonPath("\$.[1].slug").value(ipsumArticle.slug))
 
+    }
+
+    @Test
+    fun `List users`() {
+        val johnDoe: User = User("johnDoe", "John", "Doe")
+        val janeDoe: User = User("janeDoe", "Jane", "Doe")
+
+        every {
+            userRepository.findAll()
+        } returns listOf(johnDoe, janeDoe)
+
+        mockMvc.perform(
+            get("/api/user/").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk)
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("\$.[0].login").value(johnDoe.login))
+            .andExpect(jsonPath("\$.[1].login").value(janeDoe.login))
     }
 
 }

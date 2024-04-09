@@ -3,6 +3,7 @@ package belicfr.exercise.sbkotblog.controllers
 import belicfr.exercise.sbkotblog.entities.Article
 import belicfr.exercise.sbkotblog.entities.User
 import belicfr.exercise.sbkotblog.format
+import belicfr.exercise.sbkotblog.properties.BlogProperties
 import belicfr.exercise.sbkotblog.repositories.ArticleRepository
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Controller
@@ -13,11 +14,13 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.server.ResponseStatusException
 
 @Controller
-class BlogController(private val repository: ArticleRepository) {
+class BlogController(private val repository: ArticleRepository,
+                     private val properties: BlogProperties) {
 
     @GetMapping("/")
     fun articles(model: Model): String {
-        model["title"] = "Blog"
+        model["title"] = properties.title
+        model["banner"] = properties.banner
         model["articles"] = repository
             .findAllByOrderByAddedAtDesc()
             .map {
